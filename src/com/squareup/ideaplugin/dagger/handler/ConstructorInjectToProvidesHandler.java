@@ -61,6 +61,11 @@ public class ConstructorInjectToProvidesHandler implements GutterIconNavigationH
     PsiClass classElement = JavaPsiFacade.getInstance(psiParameter.getProject()).findClass(
             declaringTypeElement.getType().getCanonicalText(),
             declaringTypeElement.getResolveScope());
+
+    if (classElement == null) {
+      return false;
+    }
+
     for (PsiMethod method : classElement.getConstructors()) {
       if (PsiConsultantImpl.hasAnnotation(method, CLASS_INJECT) && navigateToElement(method)) {
           return true;
